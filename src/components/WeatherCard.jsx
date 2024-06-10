@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { ForDate } from '../utils/ForDate';
 import sun from '../assets/icons/sun.png';
@@ -11,14 +10,15 @@ import wind from '../assets/icons/windy.png';
 import '../index.css';
 
 const WeatherCard = ({
+  city,
   temperature,
   feelsLike,
   humidity,
-  minimumTemperature,
+  speed,
   iconString,
   conditions,
 }) => {
-  const [icon, setIcon] = useState(sun);
+  const [icon, setIcon] = useState();
   const { time } = ForDate();
 
   useEffect(() => {
@@ -42,20 +42,24 @@ const WeatherCard = ({
   }, [iconString]);
 
   return (
-    <div className='w-[22rem] min-w-[22rem] h-[30rem] glassCard p-4'>
-      <div className='flex w-full just-center, items-center gap-4 mt-12 mb-4'>
-        <img src={icon} alt="weather_icon" />
-        <p className='font-bold text-5xl flex justify-center items-center'>{temperature} &deg;C</p>
+    <div className='w-[20rem] min-w-[22rem] h-[30rem] glassCard p-4'>
+      <div className='w-full flex justify-between items-center mt-4'>
+        <p className='flex-3 text-center '>{new Date().toDateString()}</p>
+        <p className='flex-3 text-center '>{time}</p>
+      </div>
+      <div className='flex w-20 just-center, items-center gap-4 mt-12 mb-4'>
+        <img src={icon} alt="weather_icon" /><div className='text-center font-bold text-3xl mb-4'>{city}</div>
+
       </div>
       <div className='font-bold text-center text-xl'>
+        Temperature: {temperature} &deg;C
+        <hr></hr>
         Feels like: {feelsLike} &deg;C
+
       </div>
-      <div className='w-full flex justify-between items-center mt-4'>
-        <p className='flex-1 text-center p-2'>{new Date().toDateString()}</p>
-        <p className='flex-1 text-center p-2'>{time}</p>
-      </div>
+
       <div className='w-full flex justify-between items-center mt-4 gap-4'>
-        <p className='flex-1 text-center p-2 font-bold bg-blue-600 shadow rounded-lg'>Minimum Temperature <span className='font-normal'>{minimumTemperature} &deg;C</span></p>
+        <p className='flex-1 text-center p-2 font-bold bg-blue-600 shadow rounded-lg'>Wind speed <span className='font-normal'>{speed} m/s</span></p>
         <p className='flex-1 text-center p-2 font-bold rounded-lg bg-green-600'>Humidity <span className='font-normal'>{humidity}%</span></p>
       </div>
       <hr className='bg-slate-600' />
